@@ -1,0 +1,43 @@
+/*
+ * FILE NAME: EventTree.java
+ * @author Minhal Gardezi and Joyce Zhao
+ * WHAT: An interface for a tree of events. 
+ * NOTE: Joyce created this class.
+ * All parts of the class are functioning properly.
+ */
+
+import java.util.Iterator;
+
+public interface EventTree<T> extends Iterable<T> {
+  
+  //  Returns the root of tree
+  public T getRoot(); 
+  
+  //  Returns the member that is the left child of target.
+  //  Returns null if the left child does not exist.
+  public T getLeft(T target); // Paternal ancestors are on the left
+  
+  //  Sets the left child of the tree target to lchild.
+  //  It throws an exception if target is not already in the tree
+  public void setLeft(T target, T lchild);
+  
+  //  Returns the element that is the right child of target.
+  //  Returns null if the right child does not exist
+  public T getRight(T target); // Maternal ancestors are on the right
+  
+  //  Sets the right child of target to rchild.
+  //  It throws an exception if target is not already in the tree
+  public void setRight(T target, T rchild);
+    
+  //  Returns the number of members in this ancestral tree.
+  public int size();
+  
+  //  Returns the string representation of the binary tree,
+  // one line per level.
+  public String toString();
+    
+  //  Returns an iterator that contains a level-order traversal
+  // on the ancestral tree.
+  public Iterator<T> byGenerations();
+  
+}

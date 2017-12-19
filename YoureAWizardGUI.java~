@@ -1,0 +1,28 @@
+import javax.swing.*; 
+import java.awt.*;
+import java.io.*;
+
+public class YoureAWizardGUI {
+  public static void main (String[] args) 
+  { 
+    try {
+    JFrame frame = new JFrame ("You're A Wizard!"); 
+    frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE); 
+    frame.getContentPane().setBackground(Color.BLACK);
+    
+    Adventure harryPotter = new Adventure(Adventure.fromFile("HPQuestions.txt"), Adventure.fromFile("HPResults.txt"));
+    JTabbedPane tp = new JTabbedPane(); 
+    tp.addTab ("About", new WelcomeTab(harryPotter)); 
+    tp.addTab ("Adventure", new AdventureTab(harryPotter)); 
+    
+    frame.setSize(1000, 250);
+    
+    frame.getContentPane().add(tp); 
+    
+    frame.setVisible(true); 
+    }
+    catch (FileNotFoundException e) {
+      System.out.println(e);
+    }
+  } 
+}

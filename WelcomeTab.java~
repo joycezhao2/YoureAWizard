@@ -1,0 +1,89 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class WelcomeTab extends JPanel {
+  
+  private Adventure a;
+  private JTextField nameTextField;
+  private JButton nextButton;
+  private JPanel controls, proceed; 
+  private JLabel instruct, message, result, leftBolt, rightBolt;
+    
+  public WelcomeTab(Adventure a) { 
+    this.a = a;
+    
+    setLayout(new BorderLayout());
+    
+    nameTextField = new JTextField();
+   
+    proceed = new JPanel(); 
+    proceed.setBackground(Color.BLACK);
+    message = new JLabel("");
+    message.setForeground(Color.YELLOW);
+    proceed.add(message);
+    nextButton = new JButton("Enter Name");
+    proceed.add(nextButton);
+   
+    add(makeNorthPanel(), BorderLayout.NORTH);
+    add(nameTextField, BorderLayout.CENTER);
+    add(proceed, BorderLayout.SOUTH);
+    
+    nextButton.addActionListener(new ButtonListener());
+  }
+  
+  private static ImageIcon createImageIcon(String path, String description) {
+    java.net.URL imgURL = Adventure.class.getResource(path);
+    if (imgURL != null) {
+      return new ImageIcon(imgURL, description);
+    } else {
+      System.err.println("Couldn't find file: " + path);
+      return null;
+    }
+  }
+  
+  private JPanel makeNorthPanel() {
+    JPanel centerPanel = new JPanel();
+    centerPanel.setLayout(new BorderLayout(10, 10));
+    centerPanel.setBackground(Color.BLACK);
+    
+    String instructText = "<html><center>Bring Your Harry Potter Adventure to Life!<br>"
+                                    + "Designed by Minhal Gardezi and Joyce Zhao."
+                                    + "<br>-------<br>To embark on your journey, please enter your name.</center><html>";
+    
+    ImageIcon bolt = createImageIcon("bolt.png", "a lightning bolt image");
+    ImageIcon boltFlip = createImageIcon("boltflip.png", "a lightning bolt image");
+    
+    instruct = new JLabel(instructText);
+    instruct.setHorizontalAlignment(JLabel.CENTER);
+    instruct.setForeground(Color.YELLOW);
+    
+    leftBolt = new JLabel(bolt);
+    rightBolt = new JLabel(boltFlip);
+    
+    centerPanel.add(leftBolt,BorderLayout.WEST);
+    centerPanel.add(instruct,BorderLayout.CENTER);
+    centerPanel.add(rightBolt,BorderLayout.EAST);
+    
+    return centerPanel;
+  }
+  
+  private class ButtonListener implements ActionListener {
+    private String name; 
+    
+    public void actionPerformed (ActionEvent event)
+    {
+      this.name = nameTextField.getText();
+      
+      if (name.isEmpty())
+        message.setText("Please enter your name to continue!");
+      
+      else {
+        a.setName(name);
+        message.setText("Welcome, " + a.getName() + "! You're a Wizard!");
+        proceed.remove(nextButton);
+      } 
+    }
+  }
+  
+}
